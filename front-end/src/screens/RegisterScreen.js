@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { 
     Text, 
     TextInput, 
@@ -8,16 +8,19 @@ import {
     StyleSheet,
 } from "react-native"
 
+import { AuthContext } from "../context/AuthContext";
+
 const RegisterScreen = ({navigation}) => {
 
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
-    
+    const val = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
+                <Text>{val}</Text>
                 <TextInput 
                     style={styles.input} 
                     value={name} 
