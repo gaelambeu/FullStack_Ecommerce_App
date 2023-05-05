@@ -32,7 +32,17 @@ export const AuthProvider = ({children}) => {
         });
     };
 
+    const login = (email, password) => {
+        setIsLoading(true);
 
+        axios.post(`${BASE_URL}/login`, {
+            email, password
+        }).then(res => {
+            let userInfo = res.data;
+        })
+    };
+    
+    
     return (
         <AuthContext.Provider value={{
                 isLoading,
