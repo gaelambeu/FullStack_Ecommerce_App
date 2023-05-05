@@ -1,22 +1,45 @@
-import React,{createContext} from "react";
+import axios from "axios";
+import React,{createContext, useState} from "react";
 import { BASE_URL } from "../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
+    const[userInfo, setUserInfo] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const register = (name, email, password) => {
-        axios.post(`${BASE_URL}/register`, {
-            name, email, password
-        }).then(res => {
+        setIsLoading(true);
 
-        }).catch(e => {
-            console.log('register error ${e}');
+        axios
+            .post(`${BASE_URL}/register`, {
+                name, 
+                email, 
+                password
+        }).then(res => {
+            let userInfo = res.data;
+            setUserInfo(userInfo);
+            AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+            setIsLoading(false)
+            console.log(userInfo);
+        })
+        .catch(e => {
+            console.log(`register error ${e}`);
+            setIsLoading(false);
         });
     };
 
 
     return (
-        <AuthContext.Provider value="Test value changed">{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{
+                isLoading,
+                userInfo,
+                register,
+            }}>
+                {children}
+        </AuthContext.Provider>
     );
 };

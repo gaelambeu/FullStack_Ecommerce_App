@@ -15,12 +15,13 @@ const RegisterScreen = ({navigation}) => {
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
-    const val = useContext(AuthContext);
+    
+    const {isLoading, register} = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
-                <Text>{val}</Text>
+               
                 <TextInput 
                     style={styles.input} 
                     value={name} 
@@ -43,7 +44,10 @@ const RegisterScreen = ({navigation}) => {
                     secureTextEntry 
                 />
 
-                <Button title="Register" />
+                <Button title="Register" onPress={() => {
+                        register(name, email, password);
+                    }} 
+                />
 
                 <View style={{flexDirection:'row', marginTop: 20}}>
                     <Text>Already have an account?</Text>
