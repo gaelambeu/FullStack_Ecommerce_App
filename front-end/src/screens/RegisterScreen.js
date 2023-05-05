@@ -8,6 +8,7 @@ import {
     StyleSheet,
 } from "react-native"
 
+import Spinner from "react-native-loading-spinner-overlay";
 import { AuthContext } from "../context/AuthContext";
 
 const RegisterScreen = ({navigation}) => {
@@ -20,6 +21,7 @@ const RegisterScreen = ({navigation}) => {
 
     return (
         <View style={styles.container}>
+            <Spinner visible={isLoading} />
             <View style={styles.wrapper}>
                
                 <TextInput 
