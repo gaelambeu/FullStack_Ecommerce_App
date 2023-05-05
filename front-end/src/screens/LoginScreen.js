@@ -1,18 +1,41 @@
-import React from "react";
-import { Text, TextInput, View, Button, TouchableOpacity, StyleSheet } from "react-native"
+import React, {useState} from "react";
+import { 
+            Text, 
+            TextInput, 
+            View, 
+            Button, 
+            TouchableOpacity, 
+            StyleSheet,
+        } from "react-native"
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
+
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
-                <TextInput style={styles.input} placeholder="Enter email" />
-                <TextInput style={styles.input} placeholder="Enter password" secureTextEntry />
+                <TextInput 
+                    style={styles.input} 
+                    value={email} 
+                    placeholder="Enter email" 
+                    onChangeText={text => setEmail(text)}
+                />
+
+                <TextInput 
+                    style={styles.input} 
+                    value={password} 
+                    placeholder="Enter password"
+                    onChangeText={text => setPassword(text)} 
+                    secureTextEntry 
+                />
 
                 <Button title="Login" />
 
                 <View style={{flexDirection:'row', marginTop: 20}}>
                     <Text>Don't have an a account?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Register')} >
                         <Text style={styles.link} >Register</Text>
                     </TouchableOpacity>
                 </View>
