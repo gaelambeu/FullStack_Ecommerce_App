@@ -10,7 +10,7 @@ const PORT = 3000;
 // connection mongoose
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/CMRdb', {
-    useMongoClient: true
+    useNewUrlParser: true
 });
 
 // bodyparser
