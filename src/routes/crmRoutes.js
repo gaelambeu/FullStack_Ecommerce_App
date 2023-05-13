@@ -1,5 +1,6 @@
 const express = require("express")
 const routes = express.Router()
+const { addNewContact } = require('../controllers/crmControllers')
 
 routes.get('/contact', (req, res, next) => {
     // middleware
@@ -10,8 +11,6 @@ routes.get('/contact', (req, res, next) => {
     res.send("ask GET with success")}
 )
 
-routes.post('/contact', (req, res) => {
-    res.send("ask POST with success")
-})
+routes.post(addNewContact)
 
 module.exports = routes
