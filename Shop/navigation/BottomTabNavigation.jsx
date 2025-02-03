@@ -1,19 +1,17 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import Home from '../screens/Home';
-import Search from '../screens/Search';
-import Profile from '../screens/Profile';
+import {Home, Search, Profile} from '../screens'
 import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants';
 
+const Tab = createBottomTabNavigator();
 
 const screenOptions = {
     tabBarShowLabel: false,
     tabBarHideOnKeyboard: true,
     headerShown: false,
     tabBarStyle: {
-        position: absolute,
+        position: "absolute",
         bottom: 0,
         right: 0,
         left: 0,
@@ -22,8 +20,6 @@ const screenOptions = {
     }
 }
 
-
-const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {
   return (
@@ -43,11 +39,11 @@ const BottomTabNavigation = () => {
         />
 
         <Tab.Screen 
-            name="Home" 
-            component={Home} 
+            name="Search" 
+            component={Search} 
             options={{
                 tabBarIcon: ({focused}) => {
-                    return <Ionicons name={"search-search"} 
+                    return <Ionicons name={"search"} 
                                 size={24}
                                 color={focused ? COLORS.primary : COLORS.gray2}
                             />
@@ -57,11 +53,11 @@ const BottomTabNavigation = () => {
         />
 
         <Tab.Screen 
-            name="Home" 
-            component={Home} 
+            name="Profile" 
+            component={Profile} 
             options={{
                 tabBarIcon: ({focused}) => {
-                    return <Ionicons name={focused ? "home" : "home-outline"} 
+                    return <Ionicons name={focused ? "person" : "person-outline"} 
                                 size={24}
                                 color={focused ? COLORS.primary : COLORS.gray2}
                             />
