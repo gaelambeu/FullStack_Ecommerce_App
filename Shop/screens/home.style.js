@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems:'center',
         justifyContent: "center",
-        backgroundColor: "green",
+        backgroundColor: "#FF7754",
         zIndex: 999,
     },
     cartNumber:{

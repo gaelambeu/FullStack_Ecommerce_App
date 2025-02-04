@@ -13,7 +13,7 @@ const screenOptions = {
     headerShown: false,
     tabBarStyle: {
         position: "absolute",
-        backgroundColor: '#DDF0FF',
+        backgroundColor: '#FF7754',
         elevation: 5,
         bottom: 40,
         marginHorizontal: 45,
@@ -42,7 +42,7 @@ const BottomTabNavigation = () => {
                     <View style={{
                         width: focused ? 55 : 30,  // Taille agrandie quand actif
                         height: focused ? 55 : 30,
-                        backgroundColor: focused ? "#FF7754" : "transparent",
+                        backgroundColor: focused ? "black" : "transparent",
                         borderRadius: 42.5,
                         justifyContent: "center",
                         alignItems: "center",
@@ -71,7 +71,7 @@ const BottomTabNavigation = () => {
                     <View style={{
                         width: focused ? 55 : 30,  // Taille agrandie quand actif
                         height: focused ? 55 : 30,
-                        backgroundColor: focused ? "#FF7754" : "transparent",
+                        backgroundColor: focused ? "black" : "transparent",
                         borderRadius: 42.5,
                         justifyContent: "center",
                         alignItems: "center",
@@ -100,7 +100,7 @@ const BottomTabNavigation = () => {
                     <View style={{
                         width: focused ? 55 : 30,  // Taille agrandie quand actif
                         height: focused ? 55 : 30,
-                        backgroundColor: focused ? "#FF7754" : "transparent",
+                        backgroundColor: focused ? "black" : "transparent",
                         borderRadius: 42.5,
                         justifyContent: "center",
                         alignItems: "center",
@@ -113,7 +113,7 @@ const BottomTabNavigation = () => {
                         <Ionicons 
                             name={focused ? "person" : "person-outline"} 
                             size={focused ? 30 : 30}
-                            color={focused ? COLORS.primary : COLORS.gray2}
+                            color={focused ? 'white' : 'black'}
                         />
                     </View>
                 )

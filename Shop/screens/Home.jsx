@@ -1,7 +1,8 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, Text, View } from 'react-native'
 import React from 'react'
 import styles from './home.style'
 import { Ionicons } from '@expo/vector-icons'
+import { Welcome } from '../components'
 
 const Home = () => {
   return (
@@ -24,6 +25,10 @@ const Home = () => {
           
         </View>
       </View>
+
+      <ScrollView>
+        <Welcome />
+      </ScrollView>
       
       
     </SafeAreaView>
