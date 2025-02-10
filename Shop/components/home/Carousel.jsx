@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Dimensions, Image, Animated } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import PagerView from "react-native-pager-view";
 
-const { width: screenWidth } = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const ImageData = [
   { id: 1, imgUrl: "https://i.pinimg.com/736x/a8/81/cd/a881cd926678dd8d4631e98e35eaacff.jpg" },
@@ -14,57 +14,13 @@ const ImageData = [
 ];
 
 const BoxCarousel = () => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const pagerRef = useRef(null);
-  const rotateAnim = useRef(new Animated.Value(0)).current;
-
-  // 🔄 Animation de rotation 360° en boucle
-  useEffect(() => {
-    Animated.loop(
-      Animated.timing(rotateAnim, {
-        toValue: 1,
-        duration: 5000, // Temps de rotation
-        useNativeDriver: true,
-      })
-    ).start();
-  }, []);
-
-  // ⏳ Autoplay toutes les 3 secondes
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentPage((prevPage) => {
-        const nextPage = (prevPage + 1) % ImageData.length;
-        pagerRef.current?.setPage(nextPage);
-        return nextPage;
-      });
-    }, 3000); // Change d'image toutes les 3 secondes
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>PUBLICITE</Text>
-      <PagerView ref={pagerRef} style={styles.pagerView} initialPage={0}>
+      <Text style={styles.text}>PUBLICITÉ</Text>
+      <PagerView style={styles.pagerView} initialPage={0}>
         {ImageData.map((item) => (
           <View key={item.id} style={styles.page}>
-            <Animated.View
-              style={[
-                styles.card,
-                {
-                  transform: [
-                    {
-                      rotateY: rotateAnim.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ["0deg", "360deg"],
-                      }),
-                    },
-                  ],
-                },
-              ]}
-            >
-              <Image source={{ uri: item.imgUrl }} style={styles.image} />
-            </Animated.View>
+            <Image source={{ uri: item.imgUrl }} style={styles.image} />
           </View>
         ))}
       </PagerView>
@@ -90,27 +46,20 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   pagerView: {
-    width: screenWidth - 40,
-    height: 220,
+    width: screenWidth,
+    height: screenHeight * 0.4, // Forcer une hauteur suffisante pour voir plusieurs images
   },
   page: {
+    width: screenWidth, // Largeur pleine pour bien afficher chaque image
+    height: screenHeight * 0.4, // Hauteur suffisante
     justifyContent: "center",
     alignItems: "center",
-  },
-  card: {
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    width: screenWidth - 60,
-    height: 200,
-    borderWidth: 1,
-    borderColor: "black",
-    overflow: "hidden",
-    backgroundColor: "#fff",
+    backgroundColor: "white", // Assurer une bonne visibilité
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: screenWidth - 40,
+    height: screenHeight * 0.35, // Ajustement dynamique de la taille
+    borderRadius: 10,
     resizeMode: "cover",
   },
 });
