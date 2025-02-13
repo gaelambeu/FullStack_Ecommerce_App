@@ -2,7 +2,7 @@ import { SafeAreaView, ScrollView, Text, View } from 'react-native'
 import React from 'react'
 import styles from './home.style'
 import { Ionicons } from '@expo/vector-icons'
-import { Welcome, Carousel } from '../components'
+import { Categories, ImageCarousel, ProductsScreen } from '../components'
 
 const Home = () => {
   return (
@@ -27,8 +27,10 @@ const Home = () => {
       </View>
 
       <ScrollView>
-        <Carousel />
-        <Welcome />
+        <ImageCarousel />
+        <Categories />
+        <ProductsScreen />
+
       </ScrollView>
       
       

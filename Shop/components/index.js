@@ -1,4 +1,5 @@
-import Welcome from "./home/Welcome";
-import Carousel from "./home/Carousel";
+import Categories from "./home/Categories";
+import ImageCarousel from "./home/ImageCarousel";
+import ProductsScreen from "./products/ProductsScreen";
 
-export {Welcome , Carousel}
+export {Categories , ImageCarousel, ProductsScreen}
