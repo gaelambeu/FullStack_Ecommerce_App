@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     
   },
 
-  image: {
-    margin: 10,
+  imageProduct: {
+    margin: 8,
     width: 100, 
     height: 120, 
   },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
     flexDirection: "row",
     gap: 5,
-    margin: 3
+    margin: 2
   },
 
   productName: {
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
 
 productDescriptionCard: {
-    marginHorizontal: 3,
+    marginHorizontal: 2,
 },
 
 productDescription: {
@@ -56,7 +56,22 @@ productDescription: {
 },
 
 iconCard: {
-    flexDirection: "row"
+    flexDirection: "row",
+    gap: 60,
+},
+
+starCard: {
+    gap: 3,
+    flexDirection: "row",
+},
+
+starIcon: {
+    color: "yellow"
+},
+
+rating: {
+    color: "white",
+    fontSize: 20
 }
   
 });

@@ -1,0 +1,30 @@
+data={filteredProducts}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2} // ✅ Affichage en 2 colonnes
+        columnWrapperStyle={styles.row} // ✅ Pour espacer les colonnes
+        renderItem={({ item }) => (
+          <View style={styles.productCard}>
+            <Image source={{ uri: item.uri }} style={styles.image} />
+            <View style={styles.productDetails}>
+              <Text style={styles.productName}>{item.name}</Text>
+              <Text style={styles.productPrice}>{item.price}</Text>
+            </View>
+            <View style={styles.productDescriptionCard}>
+              <Text style={styles.productDescription}>
+                {truncateText(item.description, 50)}
+              </Text>
+            </View>
+            <View style={styles.iconCard}>
+              <View style={styles.starCard}>
+                <Ionicons name='star-sharp' size={25} style={styles.starIcon}/> 
+                <Text style={styles.rating}>{item.rating}</Text>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Ionicons name='heart' size={28} />
+                </TouchableOpacity>
+                 
+              </View>
+            </View>
+          </View>
+        )}

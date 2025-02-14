@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import React from 'react';
 import styles from './products.style';
 import { useRoute } from '@react-navigation/native';
@@ -36,7 +36,7 @@ const ProductsScreen = () => {
         columnWrapperStyle={styles.row} // ✅ Pour espacer les colonnes
         renderItem={({ item }) => (
           <View style={styles.productCard}>
-            <Image source={{ uri: item.uri }} style={styles.image} />
+            <Image source={{ uri: item.uri }} style={styles.imageProduct} />
             <View style={styles.productDetails}>
               <Text style={styles.productName}>{item.name}</Text>
               <Text style={styles.productPrice}>{item.price}</Text>
@@ -48,10 +48,14 @@ const ProductsScreen = () => {
             </View>
             <View style={styles.iconCard}>
               <View style={styles.starCard}>
-                <Ionicons name='star-sharp' size={30} /> 
+                <Ionicons name='star-sharp' size={25} style={styles.starIcon}/> 
+                <Text style={styles.rating}>{item.rating}</Text>
               </View>
               <View>
-                <Ionicons name='heart-sharp' size={30} /> 
+                <TouchableOpacity>
+                  <Ionicons name='heart' size={28} />
+                </TouchableOpacity>
+                 
               </View>
             </View>
           </View>
