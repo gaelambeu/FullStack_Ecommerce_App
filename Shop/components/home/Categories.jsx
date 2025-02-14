@@ -1,9 +1,7 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, Image, FlatList, TouchableOpacity, Animated } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './categories.style';
-import { useRoute } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons'
-import ProductsScreen from '../products/ProductsScreen';
+import { Ionicons } from '@expo/vector-icons';
 
 const categories = [
   { id: 1, textcat: "Fruits", uri: "https://i.pinimg.com/474x/68/60/27/686027dc0db04ae6272ac72b6a7ed195.jpg" },
@@ -13,26 +11,27 @@ const categories = [
 ];
 
 const products = [
-  { id: 1, categoryId: 1, name: "Banane", price: "2€", uri: "https://avatars.mds.yandex.net/i?id=9ace3a67c7a567aa9d70a28c0e7875ab666d9dc5-10877191-images-thumbs&n=13", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum officiis vero quis. Iure laboriosam, odit voluptates dolor minima reprehenderit. Quos praesentium quidem neque delectus ipsum, aspernatur laudantium dicta sint aliquam.", rating: '3.5'},
-  { id: 2, categoryId: 1, name: "Fraise", price: "1.5€", uri: "https://i.pinimg.com/474x/f1/66/f4/f166f498de0a43d47111d8bf952f5a8c.jpg" ,description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum officiis vero quis. Iure laboriosam, odit voluptates dolor minima reprehenderit. Quos praesentium quidem neque delectus ipsum, aspernatur laudantium dicta sint aliquam." ,rating: '2.7'},
-  { id: 3, categoryId: 1, name: "Rinsain", price: "3.1€", uri: "https://avatars.mds.yandex.net/i?id=49d8f961e6a274f1fbbe9c1c19c0f3c3328a0b7a-10176094-images-thumbs&n=13", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum officiis vero quis. Iure laboriosam, odit voluptates dolor minima reprehenderit. Quos praesentium quidem neque delectus ipsum, aspernatur laudantium dicta sint aliquam." ,rating: '4.6'},
-  { id: 4, categoryId: 1, name: "Orange", price: "1.9€", uri: "https://avatars.mds.yandex.net/i?id=83e886c5a5d2b224ad074955ab43ac51d1086a252ff68225-13310033-images-thumbs&n=13", description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatum officiis vero quis. Iure laboriosam, odit voluptates dolor minima reprehenderit. Quos praesentium quidem neque delectus ipsum, aspernatur laudantium dicta sint aliquam." ,rating: '1.9'},
-  
+  { id: 1, categoryId: 1, name: "Banane", price: "2€", uri: "https://avatars.mds.yandex.net/i?id=9ace3a67c7a567aa9d70a28c0e7875ab666d9dc5-10877191-images-thumbs&n=13", description: "Lorem ipsum dolor.", rating: '3.5' },
+  { id: 2, categoryId: 1, name: "Fraise", price: "1.5€", uri: "https://e7.pngegg.com/pngimages/916/107/png-clipart-juice-fruit-strawberry-apple-peach-three-strawberry-fruit-natural-foods-frutti-di-bosco.png", description: "Lorem ipsum dolor.", rating: '2.7' },
 ];
 
-
-
-const truncateText = (text, maxLength) => {
-  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-};
-
-
+const truncateText = (text, maxLength) => text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 
 const BoxCategories = () => {
-  const [selectedCategory, setSelectedCategory] = useState(categories[0].id); // Catégorie par défaut
+  const [selectedCategory, setSelectedCategory] = useState(categories[0].id);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Animation d'opacité
 
-  // Filtrer les produits de la catégorie sélectionnée
   const filteredProducts = products.filter(product => product.categoryId === selectedCategory);
+
+  useEffect(() => {
+    // Réinitialisation de l'animation
+    fadeAnim.setValue(4);
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 800, // Durée de l'animation
+      useNativeDriver: true,
+    }).start();
+  }, [selectedCategory]);
 
   return (
     <View style={styles.container}>
@@ -48,7 +47,7 @@ const BoxCategories = () => {
           <TouchableOpacity 
             style={[
               styles.itemContainer, 
-              item.id === selectedCategory && styles.selectedCategory // Ajoute un style si sélectionné
+              item.id === selectedCategory && styles.selectedCategory
             ]}
             onPress={() => setSelectedCategory(item.id)}
           >
@@ -58,39 +57,40 @@ const BoxCategories = () => {
         )}
       />
 
-      {/* Liste des produits de la catégorie sélectionnée */}
-      <FlatList
-        data={filteredProducts}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2} // ✅ Deux produits par ligne
-        columnWrapperStyle={styles.row} // ✅ Ajoute un espace entre colonnes
-        contentContainerStyle={{ padding: 10, paddingBottom: 80 }} // ✅ Ajoute un espace sous les derniers produits
-        ListFooterComponent={<View style={{ height: 80 }} />} // ✅ Espace pour voir le dernier élément
-        renderItem={({ item }) => (
-          <View style={styles.productCard}>
-            <Image source={{ uri: item.uri }} style={styles.imageProduct} />
-            <View style={styles.productDetails}>
-              <Text style={styles.productName}>{item.name}</Text>
-              <Text style={styles.productPrice}>{item.price}</Text>
-            </View>
-            <View style={styles.productDescriptionCard}>
-              <Text style={styles.productDescription}>
-                {truncateText(item.description, 50)}
-              </Text>
-            </View>
-            <View style={styles.iconCard}>
-              <View style={styles.starCard}>
-                <Ionicons name='star-sharp' size={25} style={styles.starIcon}/> 
-                <Text style={styles.rating}>{item.rating}</Text>
+      {/* Liste des produits avec animation */}
+      <Animated.View style={{ opacity: fadeAnim }}>
+        <FlatList
+          data={filteredProducts}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={{ padding: 10, paddingBottom: 80 }}
+          ListFooterComponent={<View style={{ height: 80 }} />}
+          renderItem={({ item }) => (
+            <View style={styles.productCard}>
+              <Image source={{ uri: item.uri }} style={styles.imageProduct} />
+              <View style={styles.productDetails}>
+                <Text style={styles.productName}>{item.name}</Text>
+                <Text style={styles.productPrice}>{item.price}</Text>
               </View>
-              <TouchableOpacity>
-                <Ionicons name='heart' size={28} />
-              </TouchableOpacity>
+              <View style={styles.productDescriptionCard}>
+                <Text style={styles.productDescription}>
+                  {truncateText(item.description, 50)}
+                </Text>
+              </View>
+              <View style={styles.iconCard}>
+                <View style={styles.starCard}>
+                  <Ionicons name='star-sharp' size={25} style={styles.starIcon}/> 
+                  <Text style={styles.rating}>{item.rating}</Text>
+                </View>
+                <TouchableOpacity>
+                  <Ionicons name='heart' size={28} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
-      />
-
+          )}
+        />
+      </Animated.View>
 
     </View>
   );
