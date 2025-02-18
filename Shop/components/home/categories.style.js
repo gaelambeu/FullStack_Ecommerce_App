@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: 80, 
     borderRadius: 50,
   },
-  textimg: {
+  textImg: {
     fontSize: 14,
     fontWeight: "600",
     color: "black",
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
 
   productCard: {
-    backgroundColor: COLORS.gray,
+    backgroundColor: "#FF7754",
     margin: 7, 
     width: 170,
     height: 230,
